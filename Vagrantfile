@@ -1,8 +1,19 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-unless Vagrant.has_plugin?("vagrant-hostmanager")
-  system "vagrant plugin install vagrant-hostmanager"
+# Check for missing plugins
+required_plugins = %w(vagrant-hostmanager)
+plugin_installed = false
+required_plugins.each do |plugin|
+  unless Vagrant.has_plugin?(plugin)
+    system "vagrant plugin install #{plugin}"
+    plugin_installed = true
+  end
+end
+
+# If new plugins installed, restart Vagrant process
+if plugin_installed === true
+  exec "vagrant #{ARGV.join' '}"
 end
 
 Vagrant.configure("2") do |config|
