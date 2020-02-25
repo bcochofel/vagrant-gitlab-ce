@@ -32,6 +32,7 @@ Vagrant.configure("2") do |config|
   config.vm.network :forwarded_port, guest: 80, host: 8081
 
   config.vm.provider "virtualbox" do |vb|
+    vb.gui = false
     vb.name = "GitLab Server"
     vb.memory = "2048"
     vb.cpus = "2"
